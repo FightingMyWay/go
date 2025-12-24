@@ -181,7 +181,7 @@ npm run dev
 
 ## 页面展示
 
-![image-20250906141507614](https://i-blog.csdnimg.cn/img_convert/4f6b7ded2d484ff91ffa67886dfc2dd5.png)
+![image-20250906141507614](img/4f6b7ded2d484ff91ffa67886dfc2dd5.png)
 
 ![image-20250906141543625](https://i-blog.csdnimg.cn/img_convert/52a57d5fb370527b8161f798c9308e93.png)
 
