@@ -67,7 +67,7 @@ code50810/
 
 1. 创建数据库：
 ```sql
-CREATE DATABASE office_supply DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE uu DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
 2. 执行初始化脚本：
