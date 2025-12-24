@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人资料调试页面</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .section { margin-bottom: 30px; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        .button { padding: 8px 16px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .result { margin-top: 10px; padding: 10px; border-radius: 4px; }
+        .success { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .info { background: #d1ecf1; border: 1px solid #bee5eb; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <h1>个人资料功能调试</h1>
+    
+    <div class="section">
+        <h3>🔍 问题诊断</h3>
+        <button class="button" onclick="testRoute()">测试路由跳转</button>
+        <button class="button" onclick="testAPI()">测试API接口</button>
+        <button class="button" onclick="testConsole()">测试控制台</button>
+        <div id="diagnosisResult"></div>
+    </div>
+
+    <div class="section">
+        <h3>📱 模拟移动端测试</h3>
+        <button class="button" onclick="testMobile()">模拟移动端</button>
+        <div id="mobileResult"></div>
+    </div>
+
+    <div class="section">
+        <h3>🌐 网络状态检查</h3>
+        <button class="button" onclick="checkNetwork()">检查网络</button>
+        <div id="networkResult"></div>
+    </div>
+
+    <script>
+        function addResult(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `<div class="result ${type}">${message}</div>`;
+        }
+
+        function testRoute() {
+            try {
+                // 测试路由跳转
+                const currentPath = window.location.pathname;
+                const targetPath = '/user/profile';
+                
+                addResult('diagnosisResult', 
+                    `当前路径: ${currentPath}<br>` +
+                    `目标路径: ${targetPath}<br>` +
+                    `路由测试: 准备跳转到个人资料页面`, 'info');
+                
+                // 尝试跳转
+                setTimeout(() => {
+                    window.location.href = targetPath;
+                }, 2000);
+                
+            } catch (error) {
+                addResult('diagnosisResult', `路由测试失败: ${error.message}`, 'error');
+            }
+        }
+
+        function testAPI() {
+            addResult('diagnosisResult', '开始测试API接口...', 'info');
+            
+            // 测试后端连接
+            fetch('http://localhost:8085/api/user/profile', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+            })
+            .then(data => {
+                addResult('diagnosisResult', 
+                    `✅ API测试成功<br>` +
+                    `状态码: ${data.code}<br>` +
+                    `消息: ${data.message || '无'}`, 'success');
+            })
+            .catch(error => {
+                addResult('diagnosisResult', 
+                    `❌ API测试失败<br>` +
+                    `错误: ${error.message}`, 'error');
+            });
+        }
+
+        function testConsole() {
+            try {
+                console.log('测试控制台输出');
+                console.warn('测试警告信息');
+                console.error('测试错误信息');
+                
+                addResult('diagnosisResult', 
+                    `✅ 控制台测试成功<br>` +
+                    `请查看浏览器控制台(F12)`, 'success');
+            } catch (error) {
+                addResult('diagnosisResult', `❌ 控制台测试失败: ${error.message}`, 'error');
+            }
+        }
+
+        function testMobile() {
+            const userAgent = navigator.userAgent;
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+            
+            addResult('mobileResult', 
+                `设备信息:<br>` +
+                `User Agent: ${userAgent}<br>` +
+                `是否为移动设备: ${isMobile ? '是' : '否'}<br>` +
+                `屏幕尺寸: ${screen.width} x ${screen.height}`, 'info');
+        }
+
+        function checkNetwork() {
+            if (navigator.onLine) {
+                addResult('networkResult', 
+                    `✅ 网络状态正常<br>` +
+                    `在线状态: 是<br>` +
+                    `连接类型: ${navigator.connection ? navigator.connection.effectiveType : '未知'}`, 'success');
+            } else {
+                addResult('networkResult', '❌ 网络状态异常 - 当前离线', 'error');
+            }
+        }
+
+        // 页面加载完成后的自动检查
+        window.addEventListener('load', () => {
+            addResult('diagnosisResult', 
+                `🔄 页面加载完成<br>` +
+                `当前时间: ${new Date().toLocaleString()}<br>` +
+                `页面URL: ${window.location.href}`, 'info');
+        });
+
+        // 监听错误事件
+        window.addEventListener('error', (event) => {
+            addResult('diagnosisResult', 
+                `❌ 页面错误:<br>` +
+                `错误信息: ${event.message}<br>` +
+                `错误文件: ${event.filename}<br>` +
+                `错误行号: ${event.lineno}`, 'error');
+        });
+
+        // 监听未处理的Promise拒绝
+        window.addEventListener('unhandledrejection', (event) => {
+            addResult('diagnosisResult', 
+                `❌ 未处理的Promise拒绝:<br>` +
+                `原因: ${event.reason}`, 'error');
+        });
+    </script>
+</body>
+</html>
