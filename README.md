@@ -16,6 +16,7 @@
 - Maven
 
 ### 前端
+- Node.js 22.18.0
 - Vue 3.3.4
 - Vue Router 4.2.4
 - Pinia 2.1.6
