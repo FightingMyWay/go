@@ -16,7 +16,6 @@
 - Maven
 
 ### 前端
-- Node.js 22.18.0
 - Vue 3.3.4
 - Vue Router 4.2.4
 - Pinia 2.1.6
@@ -60,8 +59,8 @@ code50810/
 
 ### 1. 环境要求
 
-- JDK 11+
-- Node.js 16+
+- JDK 17.0.12
+- Node.js 22.18.0
 - MySQL 8.0+
 - Redis 6.0+
 
