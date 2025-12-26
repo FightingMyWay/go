@@ -1,7 +1,7 @@
 -- 创建数据库
 CREATE DATABASE IF NOT EXISTS `uu` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-USE `50810`;
+USE `uu`;
 
 -- 部门表 - 修正字段名
 CREATE TABLE IF NOT EXISTS `department` (
@@ -118,7 +118,7 @@ ON DUPLICATE KEY UPDATE `item_name` = VALUES(`item_name`), `price` = VALUES(`pri
 
 -- 插入默认管理员账号（密码：123456）
 INSERT INTO `sys_user` (`username`, `password`, `real_name`, `role`, `dept_id`, `status`) VALUES
-('admin', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVEFDa', '系统管理员', 'ADMIN', 1, 1)
+('admin', '$2a$10$9U9be6r9GygwPJAKhQppYu0zjn9Fi0kx3O/GkVUwVnVMMrJ1fr4Ia', '系统管理员', 'ADMIN', 1, 1)
 ON DUPLICATE KEY UPDATE `password` = VALUES(`password`);
 
 -- 检查表结构
